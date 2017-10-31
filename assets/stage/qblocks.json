@@ -1,0 +1,45 @@
+{"frames": [
+
+{
+	"filename": "0.png",
+	"frame": {"x":0,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "1.png",
+	"frame": {"x":17,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "2.png",
+	"frame": {"x":34,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+},
+{
+	"filename": "3.png",
+	"frame": {"x":51,"y":0,"w":16,"h":16},
+	"rotated": false,
+	"trimmed": false,
+	"spriteSourceSize": {"x":0,"y":0,"w":16,"h":16},
+	"sourceSize": {"w":16,"h":16}
+}],
+"meta": {
+	"app": "http://www.codeandweb.com/texturepacker",
+	"name": "Question Blocks",
+	"version": "1.0",
+	"image": "qblocks.png",
+	"format": "RGBA8888",
+	"size": {"w":67,"h":16},
+	"scale": "1",
+	"smartupdate": "$TexturePacker:SmartUpdate:76609867ff4d5f89b1c802e3ccbf2944:f13cb220b4a48ae759bcd1855d1e3203:86dcb7c9b0177fc85d2f24c3f2d79279$"
+}
+}
