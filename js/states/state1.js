@@ -1,8 +1,9 @@
 var backs = [12, 13, 14, 15, 45, 46, 47, 113, 273, 274, 275, 306, 307, 309, 310, 311, 661, 662, 663, 694, 695, 696]
 var plats = [1, 2, 34, 67, 69, 265, 266, 267, 268, 269, 298, 299, 300, 301, 302]
 var qbloc = [25]
-var playerGravity = 1200, playerDirection = 'right', playerMaxXVelocity = 100, playerMaxYVelocity = 425, playerAcceleration = 5, jump = true
-var jumpKey, fireKey, marioBackTiles, marioPlatTiles, marioQbloTiles, hitPlatform, hitQblocks, currentPlayer, currentPlayerId
+var playerGravity = 1200, playerDirection = 'right', playerMaxXVelocity = 80, playerMaxYVelocity = 425, playerAcceleration = 5, jump = true
+var jumpKey, fireKey, marioBackTiles, marioPlatTiles, marioQbloTiles, hitPlatform, hitQblocks, currentPlayer, currentPlayerId, scoreText
+var marioText, worldText1, worldText2, currentPlayerScore, overworldMusic, underworldMusic, jumpFX
 
 multimario.state1 = function(){}
 multimario.state1.prototype = {
@@ -15,6 +16,10 @@ multimario.state1.prototype = {
         game.scale.setUserScale(3,3)
         game.renderer.renderSession.roundPixels = true //prevents sprite shake when camera is following
         Phaser.Canvas.setImageRenderingCrisp(game.canvas)
+        game.load.bitmapFont('marioFont', 'assets/font/marioFont.png', 'assets/font/marioFont.xml')
+        game.load.audio('overworld', 'assets/music/overworld.ogg')
+        game.load.audio('underworld', 'assets/music/underworld.ogg')
+        game.load.audio('jump','assets/fx/smb_jump-small.wav')
     },
 
     create: function(){
@@ -50,9 +55,26 @@ multimario.state1.prototype = {
         jumpKey = game.input.keyboard.addKey(88)
         fireKey = game.input.keyboard.addKey(90)
         
-        game.world.setBounds(0,0,3616,240)
-        game.camera.setBoundsToWorld()
-        game.camera.deadzone = new Phaser.Rectangle(118, 0, 20, 240)
+        game.world.setBounds(0,0,3616,260)
+        game.camera.bounds = new Phaser.Rectangle(0,0,3616,240) //end of stage is 3360, 3616 includes underground
+        game.camera.deadzone = new Phaser.Rectangle(118,0,20,240)
+
+        marioText = game.add.bitmapText(24, 8, 'marioFont','MARIO',8)
+        scoreText = game.add.bitmapText(24, 16, 'marioFont','000000',8)
+        worldText1 = game.add.bitmapText(152, 8, 'marioFont','WORLD',8)
+        worldText2 = game.add.bitmapText(160, 16, 'marioFont','1-1',8)
+
+        marioText.fixedToCamera = true
+        scoreText.fixedToCamera = true
+        worldText1.fixedToCamera = true
+        worldText2.fixedToCamera = true
+
+        overworldMusic = game.add.audio('overworld')
+        underworldMusic = game.add.audio('underworld')
+
+        jumpFX = game.add.audio('jump')
+
+        overworldMusic.play()
     },
 
     update: function(){
@@ -105,6 +127,7 @@ multimario.state1.prototype = {
             if (jumpKey.isDown && currentPlayer.body.onFloor() && onBlock() && jump){ //allow the player to jump if they are touching the ground
                 currentPlayer.body.velocity.y = -playerMaxYVelocity
                 jump = false
+                jumpFX.play()
             }
 
             if (!jumpKey.isDown) { 
@@ -114,14 +137,48 @@ multimario.state1.prototype = {
                 jump = true //prevents jumping by just holding jump button
             }
 
+            if (fireKey.isDown) { //if player is holding down z, they can run faster
+                playerMaxXVelocity = 140
+            } else {
+                playerMaxXVelocity = 80
+            }
+
             if (!currentPlayer.body.onFloor()){ //jumping animation
                 onLadder = false
                 currentPlayer.animations.play('jump')
                 currentPlayer.body.gravity.y = playerGravity
             }
+
+            if (currentPlayer.position.y > 240){ //if player falls in a pit, they die
+                currentPlayer.kill()
+                game.camera.x = 0
+                currentPlayer.reset(100,100)
+            }
+
+            if (cursors.down.isDown && currentPlayer.position.y == 136 && currentPlayer.position.x > 905 && currentPlayer.position.x < 920){ //allows player to travel to underground
+                overworldMusic.stop()
+                underworldMusic.play()
+                game.camera.x = 3616
+                game.camera.follow(null)
+                currentPlayer.reset(3400,8)
+            }
+
+            if (cursors.right.isDown && currentPlayer.position.y == 200 && currentPlayer.position.x > 3562){ //allows player to leave the underground
+                underworldMusic.stop()
+                overworldMusic.play()
+                game.camera.x = 2472
+                currentPlayer.reset(2592,168)
+                game.camera.follow(currentPlayer, Phaser.Camera.FOLLOW_LOCKON, 0.3, 0.3)
+            }
+
+            if (currentPlayer.position.y == 200 && currentPlayer.position.x > 3235 && currentPlayer.position.x < 3248){ //resets player to beginning if they reach castle
+                game.camera.x = 0
+                currentPlayer.reset(100,100)
+            }
         }
+    },
+    render: function(){
     }
-    
 }
 
 function onBlock(){
@@ -145,9 +202,13 @@ multimario.state1.addNewPlayer = function(id,x,y){
     multimario.state1.playerMap[id].animations.add('jump', [5], 1, true)
     multimario.state1.playerMap[id].animations.add('turn', [4], 1, true)
 
-    game.camera.follow(multimario.state1.playerMap[id], Phaser.Camera.FOLLOW_LOCKON, 0.1, 0.1)
-    currentPlayer = multimario.state1.playerMap[id]
-    currentPlayerId = id
+    if (!currentPlayer){
+        console.log('set current player to id: '+id)
+        currentPlayer = multimario.state1.playerMap[id]
+        game.camera.follow(currentPlayer, Phaser.Camera.FOLLOW_LOCKON, 0.3, 0.3)
+        currentPlayerId = id
+        currentPlayerScore = 0
+    }
 }
 
 multimario.state1.movement = function(){
@@ -168,3 +229,8 @@ multimario.state1.movePlayer = function(data){ //gets from client
         }
     }
 }
+
+multimario.state1.removePlayer = function(id){
+    multimario.state1.playerMap[id].destroy();
+    delete multimario.state1.playerMap[id];
+};

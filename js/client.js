@@ -10,7 +10,7 @@ Client.socket.on('newplayer',function(data){
 })
 
 Client.socket.on('allplayers',function(data){
-    for(var i = 0; i < data.length; i++){
+    for(var i = data.length-1; i >= 0; i--){
         multimario.state1.addNewPlayer(data[i].id,data[i].x,data[i].y)
     }
 
@@ -20,5 +20,9 @@ Client.socket.on('allplayers',function(data){
 
     Client.socket.on('move',function(allData){ //gets from server, sends to phaser
         multimario.state1.movePlayer(allData)
+    })
+
+    Client.socket.on('remove',function(id){
+        multimario.state1.removePlayer(id);
     })
 })
