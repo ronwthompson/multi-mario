@@ -16,9 +16,9 @@ If you'd like to run this locally, clone/download this repository and navigate t
 
 The controls are:
 
-Movement: Arrow keys
-Jump: X key
-Fire/Accelerate: Z key
+* Movement: Arrow keys
+* Jump: X key
+* Fire/Accelerate: Z key
 
 ## Built With
 
