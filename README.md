@@ -10,15 +10,15 @@ This webapp is standalone and requires no installation.  Please see the [live de
 
 If you'd like to run this locally, clone/download this repository and navigate to the root folder.  Then follow these steps:
 
-Install packages: `npm install`
-Start local server: `node server.js`
-Open local front end in browser at: `localhost:8081`
+* Install packages: `npm install`
+* Start local server: `node server.js`
+* Open local front end in browser at: `localhost:80` (or change the environment variable POST to a port of your choice)
 
 The controls are:
 
-Movement: Arrow keys
-Jump: X key
-Fire/Accelerate: Z key
+* Movement: Arrow keys
+* Jump: X key
+* Fire/Accelerate: Z key
 
 ## Built With
 
