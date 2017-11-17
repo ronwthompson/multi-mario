@@ -10,3 +10,35 @@ canvas {
     margin-top: -360px;
     margin-left: -384px;
 }
+
+#titleImage {
+    position: fixed;
+    left: 50%;
+    top: 1%;
+    margin-left: -450px;
+}
+
+#highScores {
+    position: fixed;
+    left: 50%;
+    bottom: 2%;
+    width: 275px;
+    height: auto;
+    margin-left: -137.5px;
+}
+
+#controls1 {
+    position: fixed;
+    left: 0.5%;
+    bottom: 5%;
+    width: 150px;
+    height: auto;
+}
+
+#controls2 {
+    position: fixed;
+    right: 0.5%;
+    bottom: 5%;
+    width: 233.33px;
+    height: auto;
+}

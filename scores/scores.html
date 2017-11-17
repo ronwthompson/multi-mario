@@ -1,0 +1,51 @@
+<!doctype html> 
+<html lang="en"> 
+<head> 
+	<meta charset="UTF-8" />
+    <title>Multiplayer Mario Scoreboard</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+    <link rel="stylesheet" href="scores/css/styles.css">
+</head>
+<body>
+    <div class='container-fluid'>
+        <div class='row'>
+            <img src='scores/images/highscores2.png' alt='High Scores' id='highScores'>
+        </div>
+        <div class='row'>
+            <form>
+                <input type='text' name='playerSearch' placeholder='Search by Name!' id='nameSearch'>
+                <input type='button' value='Search' onclick='searchByName()'>
+            </form>
+        </div>
+        <div class='row'>
+            <div class='col-11'></div>
+            <div class='col-1'>
+                <input type='button' value='↺' onclick='reloadScores()'>
+            </div>
+        </div>
+        <div class='row'>
+            <div class='col-1'></div>
+            <div class='col-10'>
+                <table class="table">
+                    <thead>
+                      <tr>
+                        <th>Username</th>
+                        <th>Lifetime Points</th>
+                        <th>Highest Single Run</th>
+                        <th>Coins Collected</th>
+                        <th>Levels Completed</th>
+                        <th>Times Jumped</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                    </tbody>
+                  </table>
+            </div>
+            <div class='col-1'></div>
+        </div>
+    </div>
+
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script type="text/javascript" src='scores/js/scores.js'></script>
+</body>
+</html>
