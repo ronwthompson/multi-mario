@@ -1,9 +1,11 @@
 var multimario = {}, titleText, titleText2, playerName = '', letterX = 40, letterY = 56, letterClicks = [], displayName
 var delKey, continueKey, frameCount = 0
-const alphabet = ['A','B','C','D','E','F','G','H','I','J','K','L','M','N','O','P','Q','R','S','T','U','V','W','X','Y','Z','!','?']
+// A different, fancy way to do this: (honestly, I'd probably just stick with yours)
+const alphabet = Array.from({ length: 26 }, (_val, i) => String.fromCharCode(65 + i)).concat('!', '?')
 
 multimario.state0 = function(){}
 multimario.state0.prototype = {
+    // Each of these functions can be separated out to a different file. (e.g. preload.js, create.js, ...)
     preload: function(){
         game.scale.scaleMode = Phaser.ScaleManager.USER_SCALE
         game.scale.setUserScale(3,3)
@@ -12,8 +14,11 @@ multimario.state0.prototype = {
     },
 
     create: function(){
+        // I know it might seem silly at first but writing variable names for all these magic numbers
+        // will really help you in later stages. What is 40? What is 24? They seem super important!
+        
         game.stage.backgroundColor = '#212121'
-
+        
         titleText = game.add.bitmapText(40, 24, 'marioFont','ENTER YOUR NAME',8) 
         titleText2 = game.add.bitmapText(40, 32, 'marioFont','(UP TO 6 LETTERS):',8)
 
