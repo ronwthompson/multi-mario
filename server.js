@@ -7,6 +7,8 @@ const cors = require('cors')
 const bodyParser = require('body-parser')
 const morgan = require('morgan')
 const marioRoutes = require('./scores/js/routes')
+// I would definitely export this array somewhere else! This could get really
+// crazy were you to add a lot more coins.
 const coinArray = [
     {x:3448,y:89}, {x:3464,y:89}, {x:3480,y:89}, {x:3496,y:89}, {x:3512,y:89},
     {x:3432, y:121}, {x:3448,y:121}, {x:3464,y:121}, {x:3480,y:121}, {x:3496,y:121}, {x:3512,y:121}, {x:3528,y:121},
@@ -39,6 +41,7 @@ server.listen(port,() => { // Listens to port
 
 server.lastPlayderID = 0; // Keep track of the last id assigned to a new player
 
+// This code I'd also extract to a different file for cleanliness.
 io.on('connection',function(socket){
     socket.on('newplayer',function(){
         socket.player = {
