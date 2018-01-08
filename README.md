@@ -12,7 +12,7 @@ If you'd like to run this locally, clone/download this repository and navigate t
 
 * Install packages: `npm install`
 * Start local server: `node server.js`
-* Open local front end in browser at: `localhost:8081` (or change the environment variable POST to a port of your choice)
+* Open local front end in browser at: `localhost:8081` (or change the environment variable PORT to a port of your choice)
 
 The controls are:
 
